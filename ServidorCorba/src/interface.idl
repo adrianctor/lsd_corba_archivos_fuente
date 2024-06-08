@@ -1,0 +1,13 @@
+module sop_corba{ 
+    interface GestionProductos{ 
+        struct productoDTO { 
+            string codigoUsuario; 
+            string tipoProducto;    
+            string codigoProducto; 
+            string fechaEntrada; 
+            string horaEntrada; 
+        }; 
+            boolean registrarProducto(in productoDTO objProducto); 
+            productoDTO consultarProducto(in string codigo); 
+    }; 
+};

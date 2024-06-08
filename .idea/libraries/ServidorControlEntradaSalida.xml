@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ServidorControlEntradaSalida">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/ServidorControlEntradaSalida/dist/ServidorControlEntradaSalida.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

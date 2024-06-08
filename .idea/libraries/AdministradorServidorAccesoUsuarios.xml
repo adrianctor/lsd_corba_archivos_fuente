@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="AdministradorServidorAccesoUsuarios">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/AdministradorServidorAccesoUsuarios/dist/AdministradorServidorAccesoUsuarios.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
