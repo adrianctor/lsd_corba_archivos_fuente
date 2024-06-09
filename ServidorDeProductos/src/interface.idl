@@ -7,7 +7,8 @@ module sop_corba{
             string tipoProducto;    
             string codigoProducto; 
             string fechaEntrada; 
-            string horaEntrada; 
+            string horaEntrada;
+            boolean estado;
         }; 
             boolean registrarProducto(in productoDTO objProducto); 
             productoDTO consultarProducto(in string codigo); 

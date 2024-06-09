@@ -33,7 +33,7 @@ public class GestionProductosImpl extends GestionProductosPOA{
     @Override
     public productoDTO consultarProducto(String codigo) {
         System.out.println("ingresando a consultar producto.");
-        productoDTO objProducto = new productoDTO("-1", "-1", codigo, "dd/mm/aaaa", "hh:mm");
+        productoDTO objProducto = new productoDTO("-1", "-1", codigo, "dd/mm/aaaa", "hh:mm", false);
         if (this.productos.get(codigo) != null) {
             objProducto = this.productos.get(codigo);
             
