@@ -1,5 +1,6 @@
 package cliente.vista;
 
+import cliente.servicios.GUICliente;
 import cliente.utilidades.UtilidadesConsola;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class Menu {
 
     private final ControladorGestorUsuariosEntradaSalidaInt objRemoto;
     private Scanner scanner;
+    private GUICliente objChatGrupal;
 
     public Menu(ControladorGestorUsuariosEntradaSalidaInt objRemoto) {
         this.objRemoto = objRemoto;
@@ -27,7 +29,8 @@ public class Menu {
             System.out.println("|| 2. Listar Usuarios que ingresan ||");
             System.out.println("|| 3. Consultar Usuario            ||");
             System.out.println("|| 4. Eliminar Usuario             ||");
-            System.out.println("|| 5. Salir                        ||");
+            System.out.println("|| 5. Iniciar chat grupal          ||");
+            System.out.println("|| 6. Salir                        ||");
             System.out.println("Digite una opción:");
             opcion = UtilidadesConsola.leerEntero();
             switch (opcion) {
@@ -44,6 +47,9 @@ public class Menu {
                     eliminarUsuario();
                     break;
                 case 5:
+                    iniciarChat();
+                    break;
+                case 6:
                     System.out.println("\nSaliendo...");
                     break;
                 default:
@@ -194,5 +200,10 @@ public class Menu {
             System.out.println("\nLa operación no se pudo completar, intente nuevamente...");
             System.out.println("Excepción generada: " + e.getMessage());
         }
+    }
+    
+    public void iniciarChat(){
+        objChatGrupal = new GUICliente();
+        objChatGrupal.setVisible(true);
     }
 }
