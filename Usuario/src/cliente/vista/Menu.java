@@ -1,5 +1,6 @@
 package cliente.vista;
 
+import cliente.servicios.GUICliente;
 import cliente.utilidades.UtilidadesConsola;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,7 @@ public class Menu {
 
     private final ControladorGestionarEntradaSalidaInt objRemoto;
     private final GestionProductosOperations objRef;
+    private GUICliente objChatGrupal;
 
     public Menu(ControladorGestionarEntradaSalidaInt objRemoto, GestionProductosOperations objRef) {
         this.objRemoto = objRemoto;
@@ -25,7 +27,8 @@ public class Menu {
             System.out.println("|| 1. Entrar a las instalaciones. ||");
             System.out.println("|| 2. Salir de las instalaciones. ||");
             System.out.println("|| 3. Consultar producto registrado.||");
-            System.out.println("|| 4. Salir                       ||");
+            System.out.println("|| 4. Iniciar chat con administradores.||");
+            System.out.println("|| 5. Salir                       ||");
             System.out.println("Digite la opción:");
             opcion = UtilidadesConsola.leerEntero();
             switch (opcion) {
@@ -39,6 +42,9 @@ public class Menu {
                     consultarProductoRegistrado();
                     break;
                 case 4:
+                    iniciarChat();
+                    break;
+                case 5:
                     System.out.println("\nVuelve pronto...");
                     break;
                 default:
@@ -129,7 +135,12 @@ public class Menu {
             System.out.println("\nError: La operación no se pudo completar, intente nuevamente... (" + e.getMessage() + ")");
         }
     }
-
+    
+    private void iniciarChat(){
+        objChatGrupal = new GUICliente();
+        objChatGrupal.setVisible(true);
+        
+    }
     private void mostrarProducto(productoDTO objProducto) {
         if (objProducto.codigoProducto.equals("-1")) {
             System.out.println("No existe el producto consultado.");

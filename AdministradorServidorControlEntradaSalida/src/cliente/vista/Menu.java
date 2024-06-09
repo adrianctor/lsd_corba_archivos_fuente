@@ -1,5 +1,6 @@
 package cliente.vista;
 
+import cliente.servicios.GUICliente;
 import cliente.utilidades.UtilidadesConsola;
 import java.rmi.RemoteException;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +12,7 @@ import servidor.controladores.ControladorGestionarEntradaSalidaInt;
 public class Menu {
 
     private final ControladorGestionarEntradaSalidaInt objRemoto;
+    private GUICliente objChatGrupal;
 
     public Menu(ControladorGestionarEntradaSalidaInt objRemoto) {
         this.objRemoto = objRemoto;
@@ -21,13 +23,23 @@ public class Menu {
         do {
             System.out.println("\n=============== Menu ==============");
             System.out.println("||1. Consultar usuarios accesados ||");
-            System.out.println("||2. Salir                        ||");
+            System.out.println("||2. Iniciar chat grupal          ||");
+            System.out.println("||3. Salir                        ||");
             System.out.println("Digite una opción:");
             opcion = UtilidadesConsola.leerEntero();
             switch (opcion) {
-                case 1 -> listarUsuariosAccesados();
-                case 2 -> System.out.println("\nSaliendo...");
-                default -> System.out.println("\nOpción incorrecta");
+                case 1:
+                    listarUsuariosAccesados();
+                    break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    System.out.println("\nSaliendo...");
+                    break;
+                default:
+                    System.out.println("\nOpción incorrecta");
+                    break;
             }
         } while (opcion != 2);
     }
@@ -51,5 +63,9 @@ public class Menu {
         } catch (RemoteException e) {
             System.out.println("\nLa operación no se pudo completar, intente nuevamente..." + e.getMessage());
         }
+    }
+    public void iniciarChat(){
+        objChatGrupal = new GUICliente();
+        objChatGrupal.setVisible(true);
     }
 }
