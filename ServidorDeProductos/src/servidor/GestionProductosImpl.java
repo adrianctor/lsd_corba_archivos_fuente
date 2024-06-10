@@ -5,9 +5,13 @@
  */
 package servidor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import sop_corba.GestionProductosPOA;
 import sop_corba.GestionProductosPackage.productoDTO;
+import sop_corba.GestionProductosPackage.productoDTOCount;
 
 
 public class GestionProductosImpl extends GestionProductosPOA{
@@ -36,10 +40,18 @@ public class GestionProductosImpl extends GestionProductosPOA{
         productoDTO objProducto = new productoDTO("-1", "-1", codigo, "dd/mm/aaaa", "hh:mm", false);
         if (this.productos.get(codigo) != null) {
             objProducto = this.productos.get(codigo);
-            
         }        
         return objProducto;
     }
 
-    
+    @Override
+    public productoDTOCount[] consultarProductos() {
+        List<productoDTOCount> productoList = new ArrayList<>();
+
+        for (Map.Entry<String, productoDTO> entry : productos.entrySet()) {
+            productoDTOCount dtoCount = new productoDTOCount(entry.getValue(), 1); // Suponiendo que el count es 1 para cada producto
+            productoList.add(dtoCount);
+        }
+        return productoList.toArray(new productoDTOCount[productoList.size()]);
+    }
 }
