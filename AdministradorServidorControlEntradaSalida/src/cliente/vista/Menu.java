@@ -89,20 +89,26 @@ public class Menu {
             DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
 
             // Encabezado de la tabla
-            System.out.println("\nCodigo Producto   Hora Entrada         Fecha Entrada");
-            System.out.println("------------------------------------------------------");
+            System.out.printf("| %-10s | %-10s | %-15s | %-10s | %-15s | %-20s |\n",
+                    "Código del Usuario", 
+                    "Tipo Producto",
+                    "Codigo Producto", 
+                    "Estado",
+                    "Hora entrada", 
+                    "Fecha Entrada");
+            System.out.println("|--------------------|---------------|-----------------|------------|-----------------|----------------------|");
 
             // Iterar sobre la lista de productos e imprimir los detalles
             for (productoDTOCount objDTOProductoCount : productoList) {
                 productoDTO objDTOProducto = objDTOProductoCount.producto;
 
-                // Formatear la hora y la fecha
-                String horaEntradaFormateada = objDTOProducto.horaEntrada;
-                String fechaEntradaFormateada = objDTOProducto.fechaEntrada;
-
-                System.out.println(objDTOProducto.codigoProducto + "       " + 
-                                   horaEntradaFormateada + "       " + 
-                                   fechaEntradaFormateada);
+                System.out.printf("|      %-10s    | %-10s    |      %-10s | %-10s | %-15s | %-20s |\n", 
+                        objDTOProducto.codigoUsuario, 
+                        objDTOProducto.tipoProducto,
+                        objDTOProducto.codigoProducto, 
+                        objDTOProducto.estado,
+                        objDTOProducto.horaEntrada,
+                        objDTOProducto.fechaEntrada);
             }
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
