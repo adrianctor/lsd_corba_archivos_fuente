@@ -8,14 +8,18 @@ import java.util.List;
 import java.util.Locale;
 import servidor.DTO.UsuarioAccesadoDTO;
 import servidor.controladores.ControladorGestionarEntradaSalidaInt;
+import sop_corba.GestionProductosOperations;
+import sop_corba.GestionProductosPackage.productoDTO;
 
 public class Menu {
 
     private final ControladorGestionarEntradaSalidaInt objRemoto;
+    private final GestionProductosOperations objRef;
     private GUICliente objChatGrupal;
 
-    public Menu(ControladorGestionarEntradaSalidaInt objRemoto) {
+    public Menu(ControladorGestionarEntradaSalidaInt objRemoto, GestionProductosOperations objRef) {
         this.objRemoto = objRemoto;
+        this.objRef = objRef;
     }
 
     public void ejecutarMenuPrincipal() {
@@ -23,8 +27,9 @@ public class Menu {
         do {
             System.out.println("\n=============== Menu ==============");
             System.out.println("||1. Consultar usuarios accesados ||");
-            System.out.println("||2. Iniciar chat grupal          ||");
-            System.out.println("||3. Salir                        ||");
+            System.out.println("||2. Listar productos registrados ||");
+            System.out.println("||3. Iniciar chat grupal          ||");
+            System.out.println("||4. Salir                        ||");
             System.out.println("Digite una opción:");
             opcion = UtilidadesConsola.leerEntero();
             switch (opcion) {
@@ -32,9 +37,12 @@ public class Menu {
                     listarUsuariosAccesados();
                     break;
                 case 2:
-                    
+                    listarProductos();
                     break;
                 case 3:
+                    iniciarChat();
+                    break;
+                case 4:
                     System.out.println("\nSaliendo...");
                     break;
                 default:
@@ -63,6 +71,10 @@ public class Menu {
         } catch (RemoteException e) {
             System.out.println("\nLa operación no se pudo completar, intente nuevamente..." + e.getMessage());
         }
+    }
+    
+    public void listarProductos(){
+        //TODO: Implementar historial. 
     }
     public void iniciarChat(){
         objChatGrupal = new GUICliente();

@@ -85,7 +85,7 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("\nExito: Acceso concedido.\n");
-                    solicitarProducto(String.valueOf(identificacion));
+                    solicitarProducto(String.valueOf(identificacion),true);
                     System.out.println(objRemoto.generarTicket(identificacion, "e"));
                     break;
             }
@@ -109,6 +109,7 @@ public class Menu {
                     break;
                 case 3:
                     System.out.println("\nExito: Salida concedida.\n");
+                    solicitarProducto(String.valueOf(identificacion),false);
                     System.out.println(objRemoto.generarTicket(identificacion, "s"));
                     break;
             }
@@ -151,12 +152,18 @@ public class Menu {
             System.out.println("Tipo Producto: " + objProducto.tipoProducto);
             System.out.println("Fecha Entrada: " + objProducto.fechaEntrada);
             System.out.println("Hora Entrada: " + objProducto.horaEntrada);
+            System.out.println("Estado: " + objProducto.estado);
         }
     }
 
-    private void solicitarProducto(String codigoUsuario) {
+    private void solicitarProducto(String codigoUsuario, boolean estado) {
         int opcion;
-        String mensaje = "¿Desea registrar un producto? 1 para si, 2 para no";
+        String mensaje;
+        if (estado)
+            mensaje = "¿Desea registrar un producto? 1 para si, 2 para no";  
+        else
+            mensaje = "¿Desea recuperar un producto? 1 para si, 2 para no";
+
         try {
             do {
                 System.out.println(mensaje);
@@ -165,26 +172,41 @@ public class Menu {
                     break;
                 }
                 String codigoProd, tipoProd, sFecha, sHora;
-                System.out.println("Ingrese el código del producto: ");
-                codigoProd = UtilidadesConsola.leerCadena();
-                System.out.println("Ingrese el tipo del producto: ");
-                tipoProd = UtilidadesConsola.leerCadena();
-                Date fecha = new Date();
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                sFecha = format.format(fecha);
-                SimpleDateFormat formatHour = new SimpleDateFormat("hh:mm");
-                sHora = formatHour.format(fecha);
-                
-                productoDTO producto = new productoDTO(codigoUsuario, tipoProd, codigoProd, sFecha, sHora);
-                //System.out.println(producto.codigoUsuario+"|"+producto.codigoProducto+"|"+producto.tipoProducto+"|"+producto.fechaEntrada+"|"+producto.horaEntrada);
-                boolean bandera = objRef.registrarProducto(producto);
-                if (bandera) {
-                    System.out.println("Producto registrado exitosamente!!!");
-                } else {
-                    System.out.println("El producto no pudo ser registrado");
-                    mensaje = "¿Desea reintentar el registro? 1 para si, 2 para no";
+                if (estado) {
+                    System.out.println("Ingrese el código del producto: ");
+                    codigoProd = UtilidadesConsola.leerCadena();
+                    System.out.println("Ingrese el tipo del producto: ");
+                    tipoProd = UtilidadesConsola.leerCadena();
+                    Date fecha = new Date();
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                    sFecha = format.format(fecha);
+                    SimpleDateFormat formatHour = new SimpleDateFormat("hh:mm");
+                    sHora = formatHour.format(fecha);
+
+                    productoDTO producto = new productoDTO(codigoUsuario, tipoProd, codigoProd, sFecha, sHora, estado);
+                    //System.out.println(producto.codigoUsuario+"|"+producto.codigoProducto+"|"+producto.tipoProducto+"|"+producto.fechaEntrada+"|"+producto.horaEntrada);
+                    boolean bandera = objRef.registrarProducto(producto);
+                    if (bandera) {
+                        System.out.println("Producto registrado exitosamente!!!");
+                    } else {
+                        System.out.println("El producto no pudo ser registrado");
+                        mensaje = "¿Desea reintentar el registro? 1 para si, 2 para no";
+                    }
+                    mensaje = "¿Desea registrar otro producto? 1 para si, 2 para no";                    
+                }else{
+                    System.out.println("Ingrese el código del producto arecuperar: ");
+                    codigoProd = UtilidadesConsola.leerCadena();
+                    productoDTO objProducto = objRef.consultarProducto(codigoProd);
+                    objProducto.estado = estado;
+                    boolean bandera = objRef.registrarProducto(objProducto);
+                    if (bandera) {
+                        System.out.println("Producto recuperado exitosamente!!!");
+                    } else {
+                        System.out.println("El producto no pudo ser extraer");
+                        mensaje = "¿Desea reintentar la recuperacion del producto? 1 para si, 2 para no";
+                    }
+                    mensaje = "¿Desea recuperar otro producto? 1 para si, 2 para no";
                 }
-                mensaje = "¿Desea registrar otro producto? 1 para si, 2 para no";
             } while (opcion != 2);
 
         } catch (Exception e) {
