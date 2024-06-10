@@ -50,7 +50,7 @@ public class Menu {
                 default:
                     System.out.println("\nError: Opción incorrecta");
             }
-        } while (opcion != 4);
+        } while (opcion != 5);
     }
 
     private int leerIdentificacion(String prmMensaje) {

@@ -55,7 +55,7 @@ public class Menu {
                 default:
                     System.out.println("\nOpción incorrecta");
             }
-        } while (opcion != 5);
+        } while (opcion != 6);
     }
 
     private int leerIdentificacion(String prmMensaje) {

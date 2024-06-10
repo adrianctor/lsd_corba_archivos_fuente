@@ -10,6 +10,7 @@ import servidor.DTO.UsuarioAccesadoDTO;
 import servidor.controladores.ControladorGestionarEntradaSalidaInt;
 import sop_corba.GestionProductosOperations;
 import sop_corba.GestionProductosPackage.productoDTO;
+import sop_corba.GestionProductosPackage.productoDTOCount;
 
 public class Menu {
 
@@ -49,7 +50,7 @@ public class Menu {
                     System.out.println("\nOpción incorrecta");
                     break;
             }
-        } while (opcion != 2);
+        } while (opcion != 4);
     }
 
     private void listarUsuariosAccesados() {
@@ -74,7 +75,38 @@ public class Menu {
     }
     
     public void listarProductos(){
-        //TODO: Implementar historial. 
+        System.out.println("\n========== Listado de productos accesados ==========");
+        try {
+            // Llamada al método remoto para obtener la lista de productos
+            productoDTOCount[] productoList = objRef.consultarProductos();
+            if (productoList == null || productoList.length == 0) {
+                System.out.println("No hay productos para mostrar.");
+                return;
+            }
+
+            // Formateadores de fecha y hora
+            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm a", new Locale("es", "ES"));
+            DateTimeFormatter formatterFecha = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy", new Locale("es", "ES"));
+
+            // Encabezado de la tabla
+            System.out.println("\nCodigo Producto   Hora Entrada         Fecha Entrada");
+            System.out.println("------------------------------------------------------");
+
+            // Iterar sobre la lista de productos e imprimir los detalles
+            for (productoDTOCount objDTOProductoCount : productoList) {
+                productoDTO objDTOProducto = objDTOProductoCount.producto;
+
+                // Formatear la hora y la fecha
+                String horaEntradaFormateada = objDTOProducto.horaEntrada;
+                String fechaEntradaFormateada = objDTOProducto.fechaEntrada;
+
+                System.out.println(objDTOProducto.codigoProducto + "       " + 
+                                   horaEntradaFormateada + "       " + 
+                                   fechaEntradaFormateada);
+            }
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
     public void iniciarChat(){
         objChatGrupal = new GUICliente();
